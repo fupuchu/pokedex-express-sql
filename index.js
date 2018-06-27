@@ -68,6 +68,25 @@ app.get('/', (req, response) => {
   });
 });
 
+//search
+app.get('/search/:name', (req, response) => {
+  let str = req.params.name
+  let firstUpperCase = str.charAt(0).toUpperCase() + str.slice(1);
+  firstUpperCase = '%' + firstUpperCase + '%'
+
+
+  const queryValue = [firstUpperCase]
+  pool.query('SELECT * FROM pokemon WHERE name = $1', ['Charizard'],(err, result) => {
+    if (err) {
+      console.error('query error:', err.stack);
+    } else {
+      console.log("Getting all the pokemons");
+      let pokemon = result.rows;
+      response.render('home', {pokemon : pokemon})
+    }
+  });
+});
+
 app.get('/pokemon/:id', (req, response) => {
   const convertString = addZero(req.params.id)
   const queryString = 'SELECT * FROM pokemon WHERE num = $1'
