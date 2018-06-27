@@ -76,7 +76,7 @@ app.get('/search/:name', (req, response) => {
 
 
   const queryValue = [firstUpperCase]
-  pool.query('SELECT * FROM pokemon WHERE name = $1', ['Charizard'],(err, result) => {
+  pool.query('SELECT * FROM pokemon WHERE name LIKE $1', [firstUpperCase],(err, result) => {
     if (err) {
       console.error('query error:', err.stack);
     } else {
