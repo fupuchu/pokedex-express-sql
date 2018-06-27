@@ -55,16 +55,13 @@ function addZero(arg){
  */
 
 app.get('/', (req, response) => {
-  // query database for all pokemon
-
-  // respond with HTML page displaying all pokemon
-  //
   const queryString = 'SELECT * FROM pokemon ORDER BY id ASC'
-
+  //when doing UPDATE, the database order is mixed up
   pool.query(queryString, (err, result) => {
     if (err) {
       console.error('query error:', err.stack);
     } else {
+      console.log("Getting all the pokemons");
       let pokemon = result.rows;
       response.render('home', {pokemon : pokemon})
     }
@@ -80,6 +77,7 @@ app.get('/pokemon/:id', (req, response) => {
     if (err) {
       console.log("Tak boleh: " + err);
     } else {
+      console.log("Displaying: " + result.rows[0].name);
       response.render('pokemon', {pokemon: result.rows[0]})
     }
   })
@@ -108,7 +106,6 @@ app.post('/pokemon', (req, response) => {
       console.log('query error:', err.stack);
     } else {
       console.log('query result:', res);
-      // redirect to home page
       response.redirect('/');
     }
   });
@@ -116,13 +113,14 @@ app.post('/pokemon', (req, response) => {
 
 app.get('/pokemon/:id/edit', (req, response) => {
   const convertString = addZero(req.params.id)
-  const queryString = 'SELECT * FROM pokemon WHERE num = $1'
+  const queryString = 'SELECT * FROM pokemon WHERE id = $1'
   const queryValue = [convertString]
 
   pool.query(queryString, queryValue, (err, result) => {
     if (err) {
       console.log("Tak boleh: " + err);
     } else {
+      console.log("Editing: " + result.rows[0].name);
       response.render('edit', {pokemon: result.rows[0]})
     }
   })
@@ -131,27 +129,30 @@ app.get('/pokemon/:id/edit', (req, response) => {
 app.put('/pokemon/edit/:id', (req, response) => {
   const updateParams = req.body
   const convertString = addZero(req.params.id)
-  const queryString = 'UPDATE pokemon SET name = $1, img = $2, height = $3, weight= $4  WHERE num = $5'
+  const queryString = 'UPDATE pokemon SET name = $1, img = $2, height = $3, weight= $4  WHERE id = $5'
   const queryValue = [updateParams.name, updateParams.img, updateParams.height, updateParams.weight, convertString]
 
   pool.query(queryString, queryValue, (err, result) => {
     if (err) {
       console.log("Tak boleh: " + err);
     } else {
+      console.log(result);
       response.redirect('/');
     }
   })
 })
 
 app.delete('/pokemon/edit/:id', (req, response) => {
-  const deleteMe = req.body.num
+  const deleteMe = req.body
   const queryString = 'DELETE from pokemon WHERE num = $1'
-  const queryValue = [deleteMe]
+  const queryValue = [deleteMe.num]
 
+  console.log(queryValue);
   pool.query(queryString, queryValue, (err, result) => {
     if (err) {
       console.log("Tak boleh: " + err);
     } else {
+      console.log(result);
       response.redirect('/')
     }
   })
