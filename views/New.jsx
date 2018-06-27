@@ -6,12 +6,9 @@ class New extends React.Component {
       <html>
         <head />
         <body>
-          <form className="pokemon-form" method="POST" action="/pokemons">
+          <form className="pokemon-form" method="POST" action="/pokemon">
             <div className="pokemon-attribute">
-              id:<input name="id" type="text" />
-            </div>
-            <div className="pokemon-attribute">
-              num:<input name="num" type="text" />
+              num:<input name="num" type="text" maxLength="3" readOnly value={this.props.fixnum}/>
             </div>
             <div className="pokemon-attribute">
               name:<input name="name" type="text" />

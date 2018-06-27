@@ -7,10 +7,11 @@ class Home extends React.Component {
         <head />
         <body>
           <h1>Welcome to Pokedex</h1>
+          <a href="/new">Create New Pokemon</a>
           <ul>
             {this.props.pokemon.map(pokemon => (
               <li key={pokemon.id}>
-                {pokemon.name}
+                <a href={'/pokemon/' + pokemon.num}>{pokemon.name}</a>
               </li>
             ))}
           </ul>
