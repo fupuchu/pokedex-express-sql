@@ -28,6 +28,7 @@ class Pokemon extends React.Component {
               </li>
             </ul>
           </div>
+          <a href={'/pokemon/' + this.props.pokemon.num + '/edit'}>Edit Pokemon</a>
         </body>
       </html>
     );

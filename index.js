@@ -59,7 +59,7 @@ app.get('/', (req, response) => {
 
   // respond with HTML page displaying all pokemon
   //
-  const queryString = 'SELECT * from pokemon'
+  const queryString = 'SELECT * FROM pokemon ORDER BY id ASC'
 
   pool.query(queryString, (err, result) => {
     if (err) {
@@ -86,13 +86,13 @@ app.get('/pokemon/:id', (req, response) => {
 })
 
 app.get('/new', (request, response) => {
-  const numFix = 'SELECT num FROM pokemon WHERE num = (SELECT MAX(num) FROM pokemon)'
+  const numFix = 'SELECT id FROM pokemon WHERE id = (SELECT MAX(id) FROM pokemon)'
 
   pool.query(numFix, (err,res) => {
     if (err){
       console.log(err);
     } else {
-      let newNum = parseInt(res.rows[0].num) + 1
+      let newNum = parseInt(res.rows[0].id) + 1
       response.render('new', {fixnum : newNum});
     }
   })
@@ -102,7 +102,7 @@ app.get('/new', (request, response) => {
 app.post('/pokemon', (req, response) => {
   let params = req.body;
   const queryString = 'INSERT INTO pokemon(num, name, img, height, weight) VALUES($1, $2, $3, $4, $5)'
-  const values = [params.num, params.name, params.img, params.height, params.height];
+  const values = [params.num, params.name, params.img, params.height, params.weight];
   pool.query(queryString, values, (err, res) => {
     if (err) {
       console.log('query error:', err.stack);
@@ -161,4 +161,4 @@ app.delete('/pokemon/edit/:id', (req, response) => {
  * Listen to requests on port 3000
  * ===================================
  */
-app.listen(3000, () => console.log('~~~ Tuning in to the waves of port 3000 ~~~'));
+app.listen(8080, () => console.log('~~~ Tuning in to the waves of port 8080 ~~~'));
