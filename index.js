@@ -53,7 +53,7 @@ function addZero(arg){
  * Routes
  * ===================================
  */
-
+//Home
 app.get('/', (req, response) => {
   app.use((req,res) => {
     res.status(404).render('notfound')
@@ -71,7 +71,7 @@ app.get('/', (req, response) => {
   });
 });
 
-//search
+//Search
 app.get('/search/:name', (req, response) => {
   app.use((req,res) => {
     res.status(404).render('notfound')
@@ -93,7 +93,9 @@ app.get('/search/:name', (req, response) => {
   });
 });
 
+//Retrieve single pokemon
 app.get('/pokemon/:id', (req, response) => {
+  //https://stackoverflow.com/a/16558173/5866836
   app.use((req,res) => {
     res.status(404).render('notfound')
   })
@@ -111,6 +113,7 @@ app.get('/pokemon/:id', (req, response) => {
   })
 })
 
+//Add new pokemon
 app.get('/new', (request, response) => {
   const numFix = 'SELECT id FROM pokemon WHERE id = (SELECT MAX(id) FROM pokemon)'
 
@@ -124,7 +127,7 @@ app.get('/new', (request, response) => {
   })
 });
 
-
+//Insert method for new pokemon
 app.post('/pokemon', (req, response) => {
   let params = req.body;
   const queryString = 'INSERT INTO pokemon(num, name, img, height, weight) VALUES($1, $2, $3, $4, $5)'
@@ -139,6 +142,7 @@ app.post('/pokemon', (req, response) => {
   });
 });
 
+//Edit page
 app.get('/pokemon/:id/edit', (req, response) => {
   const convertString = addZero(req.params.id)
   const queryString = 'SELECT * FROM pokemon WHERE id = $1'
@@ -153,7 +157,7 @@ app.get('/pokemon/:id/edit', (req, response) => {
     }
   })
 })
-
+//Edit method
 app.put('/pokemon/edit/:id', (req, response) => {
   const updateParams = req.body
   const convertString = addZero(req.params.id)
@@ -169,7 +173,7 @@ app.put('/pokemon/edit/:id', (req, response) => {
     }
   })
 })
-
+//Delete method
 app.delete('/pokemon/edit/:id', (req, response) => {
   const deleteMe = req.body
   const queryString = 'DELETE from pokemon WHERE num = $1'
