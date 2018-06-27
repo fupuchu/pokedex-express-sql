@@ -55,6 +55,9 @@ function addZero(arg){
  */
 
 app.get('/', (req, response) => {
+  app.use((req,res) => {
+    res.status(404).render('notfound')
+  })
   const queryString = 'SELECT * FROM pokemon ORDER BY id ASC'
   //when doing UPDATE, the database order is mixed up
   pool.query(queryString, (err, result) => {
@@ -70,6 +73,9 @@ app.get('/', (req, response) => {
 
 //search
 app.get('/search/:name', (req, response) => {
+  app.use((req,res) => {
+    res.status(404).render('notfound')
+  })
   let str = req.params.name
   let firstUpperCase = str.charAt(0).toUpperCase() + str.slice(1);
   firstUpperCase = '%' + firstUpperCase + '%'
@@ -80,7 +86,7 @@ app.get('/search/:name', (req, response) => {
     if (err) {
       console.error('query error:', err.stack);
     } else {
-      console.log("Getting all the pokemons");
+      console.log("Searching all the pokemons");
       let pokemon = result.rows;
       response.render('home', {pokemon : pokemon})
     }
@@ -88,6 +94,9 @@ app.get('/search/:name', (req, response) => {
 });
 
 app.get('/pokemon/:id', (req, response) => {
+  app.use((req,res) => {
+    res.status(404).render('notfound')
+  })
   const convertString = addZero(req.params.id)
   const queryString = 'SELECT * FROM pokemon WHERE num = $1'
   const queryValue = [convertString]

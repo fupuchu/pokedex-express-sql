@@ -6,8 +6,9 @@ class NotFound extends React.Component {
     return (
       <html>
         <head />
-        <body>
+        <body style={{ fontFamily: 'sans-serif'}}>
           <h1>Not Found!</h1>
+          <a href='/'>Go Back Home</a>
         </body>
       </html>
     );

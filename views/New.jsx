@@ -5,7 +5,7 @@ class New extends React.Component {
     return (
       <html>
         <head />
-        <body>
+        <body style={{ fontFamily: 'sans-serif'}}>
           <form className="pokemon-form" method="POST" action="/pokemon">
             <div className="pokemon-attribute">
               num:<input name="num" type="text" maxLength="3" readOnly value={this.props.fixnum}/>

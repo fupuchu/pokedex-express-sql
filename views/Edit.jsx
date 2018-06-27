@@ -5,7 +5,7 @@ class Edit extends React.Component {
     return (
       <html>
         <head />
-        <body>
+        <body style={{ fontFamily: 'sans-serif'}}>
           <h4>Editing: {this.props.pokemon.name}</h4>
           <form
             className="pokemon-form"

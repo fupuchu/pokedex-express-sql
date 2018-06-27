@@ -5,7 +5,7 @@ class Pokemon extends React.Component {
     return (
       <html>
         <head />
-        <body>
+        <body style={{ fontFamily: 'sans-serif'}}>
           <div>
             <ul className="pokemon-list">
               <li className="pokemon-attribute">

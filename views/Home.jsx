@@ -5,7 +5,7 @@ class Home extends React.Component {
     return (
       <html>
         <head />
-        <body>
+        <body style={{ fontFamily: 'sans-serif'}}>
           <h1>Welcome to Pokedex</h1>
           <a href="/new">Create New Pokemon</a>
           <ul>
